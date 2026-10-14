@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Goutte à goutte</string>
+    <string name="title_activity_main">Goutte à goutte</string>
+    <string name="package_name">be.brussels.goutteagoutte</string>
+    <string name="custom_url_scheme">be.brussels.goutteagoutte</string>
+</resources>

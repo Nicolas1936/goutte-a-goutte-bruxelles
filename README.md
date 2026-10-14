@@ -25,6 +25,19 @@ npm run lint
 npm run build
 ```
 
+## Application Android
+
+Le projet Android est dans `android/`. Pour construire un APK debug localement, il faut Java 21 et Android SDK Platform 36 avec Build Tools 36.0.0 :
+
+```sh
+npm ci
+npm run build:android
+cd android
+./gradlew assembleDebug
+```
+
+L’APK est créé dans `android/app/build/outputs/apk/debug/app-debug.apk`. GitHub Actions publie aussi cet APK en artefact à chaque push sur `main`.
+
 ## Publication
 
 Les changements poussés sur `main` déclenchent le workflow GitHub Pages. Le site est publié sur `https://nicolas1936.github.io/goutte-a-goutte-bruxelles/`.

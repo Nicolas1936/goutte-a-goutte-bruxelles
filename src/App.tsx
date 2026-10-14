@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { Geolocation } from '@capacitor/geolocation'
 import { ArrowUpRight, Crosshair, Droplets, LocateFixed, MapPin, Maximize2, Minimize2, Navigation, Search, ShieldCheck, SlidersHorizontal, X } from 'lucide-react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
@@ -400,21 +401,20 @@ function App() {
     }
   }, [mapExpanded])
 
-  function locateUser() {
+  async function locateUser() {
     setLocationError(false)
-    if (!navigator.geolocation) {
+    try {
+      const { coords } = await Geolocation.getCurrentPosition({
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 30000,
+      })
+      const userPosition: [number, number] = [coords.latitude, coords.longitude]
+      setPosition(userPosition)
+      map.current?.flyTo(userPosition, 16, { duration: 0.6 })
+    } catch {
       setLocationError(true)
-      return
     }
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        const userPosition: [number, number] = [coords.latitude, coords.longitude]
-        setPosition(userPosition)
-        map.current?.flyTo(userPosition, 16, { duration: 0.6 })
-      },
-      () => setLocationError(true),
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 30000 },
-    )
   }
 
   function selectPoint(point: WaterPoint) {
